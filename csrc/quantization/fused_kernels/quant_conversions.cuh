@@ -21,7 +21,7 @@ static __device__ __forceinline__ int8_t float_to_int8_rn(float const x) {
   // round
   float dst = std::nearbyint(x);
   // saturate
-  dst = std::clamp(dst, i8_min, i8_max);
+  dst = (dst < i8_min) ? i8_min : (dst > i8_max) ? i8_max : dst; // std::clamp(dst, i8_min, i8_max);
   return static_cast<int8_t>(dst);
 #else
   // CUDA path
